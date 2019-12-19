@@ -103,4 +103,61 @@ describe('app routes', () => {
           soManyTeethInItsMouth: true,
           weightPolitelyDescribed: 'Some' }));
   });
+  it('shold update a cat by id', async() => {
+    const cat = await Cat
+      .create({
+        broadGrin: true,
+        soManyTeethInItsMouth: true,
+        canScaleATreeSoQuicklyScale: 45,
+        isToHeavy: true,
+        numberOfTails: 22,
+        slySinisterAndSleek: true,
+        weightPolitelyDescribed: 'Some',
+        hasAnOwnerOr2: true
+      });
+    return request(app)
+      .patch(`/api/v1/cats/${cat._id}`)
+      .send({ broadGrin : false })
+      .then(res =>
+        expect(res.body).toEqual({
+          __v: 0,
+          _id: expect.any(String),
+          broadGrin: false,
+          soManyTeethInItsMouth: true,
+          canScaleATreeSoQuicklyScale: 45,
+          isToHeavy: true,
+          numberOfTails: 22,
+          slySinisterAndSleek: true,
+          weightPolitelyDescribed: 'Some',
+          hasAnOwnerOr2: true
+        }));
+  });
+  it('shold delete a cat by id', async() => {
+    const cat = await Cat
+      .create({
+        broadGrin: true,
+        soManyTeethInItsMouth: true,
+        canScaleATreeSoQuicklyScale: 45,
+        isToHeavy: true,
+        numberOfTails: 22,
+        slySinisterAndSleek: true,
+        weightPolitelyDescribed: 'Some',
+        hasAnOwnerOr2: true
+      });
+    return request(app)
+      .delete(`/api/v1/cats/${cat._id}`)
+      .then(res =>
+        expect(res.body).toEqual({
+          __v: 0,
+          _id: expect.any(String),
+          broadGrin: true,
+          soManyTeethInItsMouth: true,
+          canScaleATreeSoQuicklyScale: 45,
+          isToHeavy: true,
+          numberOfTails: 22,
+          slySinisterAndSleek: true,
+          weightPolitelyDescribed: 'Some',
+          hasAnOwnerOr2: true,
+        }));
+  });
 });
